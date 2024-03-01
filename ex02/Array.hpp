@@ -6,7 +6,7 @@
 /*   By: lde-mich <lde-mich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:32:56 by lde-mich          #+#    #+#             */
-/*   Updated: 2024/03/01 11:59:58 by lde-mich         ###   ########.fr       */
+/*   Updated: 2024/03/01 16:57:31 by lde-mich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ template <typename T>
 class Array
 {
 	private:
-		T *arr;
+		T *arr = NULL;
 		unsigned int sizeArr;
 
 	public:
@@ -33,66 +33,74 @@ class Array
 		~Array();
 
 
-		class OutOfBoundsException : public std::exception
-		{
-			public:
-				std::string const what() const throw()
+		class OutOfBoundsException: public std::exception
+        {
+            public:
+                virtual const char	*what() const throw()
 				{
-					return ("Error, index is out of bounds");
-				}
-		};
+					return ("Error, index out of bounds");
+				};
+        };
 
 };
 
 template <typename T>
-Array::Array()
+Array<T>::Array()
 {
-	this->arr = new arr[];
+	std::cout << "ciao" << std::endl;
+	this->arr = NULL;
 	this->sizeArr = 0;
 }
 
 template <typename T>
-Array::Array(Array const &obj)
+Array<T>::Array(Array const &obj)
 {
 	(*this) = obj;
 }
 
 template <typename T>
-Array::Array(unsigned int n)
+Array<T>::Array(unsigned int n)
 {
 	this->sizeArr = n;
-	this->arr = new arr[n];
+	this->arr = new T[n];
 
 	for (unsigned int i = 0; i < n; i++)
-		this->arr[i] = NULL;
+		this->arr[i] = 0;
 }
 
 template <typename T>
-Array::~Array()
+Array<T>::~Array()
 {
-	delete this->arr;
+	delete [] this->arr;
+	this->arr = NULL;
 }
 
 template <typename T>
-unsigned int Array::size()
+unsigned int Array<T>::size()
 {
 	return (this->sizeArr);
 }
 
 template <typename T>
-T Array::operator[](unsigned int i)
+T &Array<T>::operator[](unsigned int i)
 {
-	if(i > this->sizeArr)
-		throw Array::OutOfBoundsException();
+	if(i >= this->sizeArr)
+		throw Array<T>::OutOfBoundsException();
 	return (this->arr[i]);
 }
 
 template <typename T>
-Array Array::operator=(Array const &obj)
+Array<T> &Array<T>::operator=(Array const &obj)
 {
-	this->sizeArr = obj.n;
+	if (this == &obj)
+		return (*this);
 
-	for (int i = 0; i < this->sizeArr; i++)
+	this->sizeArr = obj.sizeArr;
+	delete [] this->arr;
+
+	this->arr = new T[obj.sizeArr];
+
+	for (unsigned int i = 0; i < this->sizeArr; i++)
 		this->arr[i] = obj.arr[i];
 
 	return (*this);
