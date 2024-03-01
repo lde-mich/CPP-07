@@ -6,7 +6,7 @@
 /*   By: lde-mich <lde-mich@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/02/28 17:32:56 by lde-mich          #+#    #+#             */
-/*   Updated: 2024/03/01 16:57:31 by lde-mich         ###   ########.fr       */
+/*   Updated: 2024/03/01 17:49:14 by lde-mich         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ class Array
 template <typename T>
 Array<T>::Array()
 {
-	std::cout << "ciao" << std::endl;
 	this->arr = NULL;
 	this->sizeArr = 0;
 }
